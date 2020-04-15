@@ -4,7 +4,7 @@ package app;
  * Escritor de notícias (publisher)
  */
 public class Publisher extends Thread {
-  final static int esperaMax = 12000;
+  final static int esperaMax = 10000;
   private static int publishers = 0;
   private Buffer buffer;
   private int number;
@@ -28,7 +28,7 @@ public class Publisher extends Thread {
         Thread.sleep((int) (Math.random() * esperaMax));
       } catch (InterruptedException e) {
       }
-      this.buffer.addNoticia(this.number);
+      this.buffer.generate(this.number);
     }
   }
 }
