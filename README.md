@@ -70,6 +70,8 @@ public synchronized void generate(int numPublisher) {
 ```
 Note-se a keyword `synchronized` no método. Essa garante que o objeto de `Buffer` estará **bloqueado**, sem que novas threads possam acessá-lo.
 
+Se previamente existem leitores executando, primeiro é aguardado a liberação dessas threads com o `wait()`:
+
 ```java
 while (this.subscribers != 0) {
   try {
@@ -77,7 +79,7 @@ while (this.subscribers != 0) {
   } catch (InterruptedException e) {}
 }
 ```
-Se previamente existem leitores executando, primeiro é aguardado a liberação dessas threads com o `wait()`.
+Uma nova notícia é criada e é simulado um tempo de escrita aleatório:
 
 ```java
 Noticia noticia = new Noticia(this.getNoticias().size());
@@ -86,14 +88,12 @@ try {
   Thread.sleep((int) (Math.random() * tempoMaxEscrita));
 } catch (InterruptedException e) {}
 ```
-Uma nova notícia é criada e é simulado um tempo de escrita aleatório.
+Após finalizar geração, notifica todas as outras threads que aguardavam o bloqueio:
 
 ```java
 this.notifyAll();
 ```
-Após finalizar geração, notifica todas as outras threads que aguardavam o bloqueio.
-
-Para consumir uma notícias, `Subscribers` utilizam o seguinte método:
+Para consumir notícias, `Subscribers` utilizam o seguinte método:
 
 ```java
 public void consume(int numSubscriber) {
@@ -121,12 +121,18 @@ Diferente de `Buffer.generate()`, esse método não bloqueia o objeto. Temos ape
 
 Para a leitura, utiliza-se a mesma ideia de simulação de um tempo de leitura aleatório com `Thread.sleep()` e tempo `Math.random() * tempoMaxLeitura`.
 
+Após finalizar consumo, se não há mais leitores, notifica possível thread de gerador que esteja aguardando para iniciar geração no método `generate(int numPublisher)`:
 ```java
 if (this.subscribers == 0) {
   this.notifyAll();
 }
 ```
-Após finalizar consumo, se não há mais leitores, notifica possível thread de gerador que esteja aguardando para iniciar geração no método `generate(int numPublisher)`.
+
+## Considerações Finais
+
+Com esse projeto conseguimos aprofundar nossa capacidade em desenvolver e gerenciar aplicações com processos simultâneos utilizando threads.
+
+Além disso, observamos potenciais utlidades dessas práticas, como em aplicações que necessitam de procedimentos transacionais, bloqueando recursos compartilhados que não podem ser alterados por processos concorrentes.  
 
 ## Autores
 
