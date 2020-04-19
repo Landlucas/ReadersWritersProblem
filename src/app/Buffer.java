@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Um buffer de notícias que tem dois tipos de processos clientes: Os
- * escritores, geradores de notícias (publishers)e os leitores de notícias
+ * escritores, geradores de notícias (publishers) e os leitores de notícias
  * (subscribers).
  * 
  * Existem muitas threads concorrentes que desejam consumir. É aceitável ter
