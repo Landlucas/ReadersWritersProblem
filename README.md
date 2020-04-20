@@ -130,7 +130,7 @@ if (this.subscribers == 0) {
 
 ### Fluxograma dos escritores
 
-[Fluxograma escritor](writerFlux.png)
+![Fluxograma escritor](writerFlux.png)
 
 ## Considerações Finais
 
