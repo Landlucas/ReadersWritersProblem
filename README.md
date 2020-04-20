@@ -132,6 +132,10 @@ if (this.subscribers == 0) {
 
 ![Fluxograma escritor](writerFlux.png)
 
+### Fluxograma dos leitores
+
+![Fluxograma leitor](readerFlux.png)
+
 ## Considerações Finais
 
 Com esse projeto conseguimos aprofundar nossa capacidade em desenvolver e gerenciar aplicações com processos simultâneos utilizando threads.
